@@ -7,6 +7,7 @@ import RedisService from "src/common/service/redis.service";
 import { RedisModule } from "src/common/redis/redis.module";
 import TokenService from "src/common/service/token.service";
 import { JwtService } from "@nestjs/jwt";
+import { S3Service } from "src/common/service/s3.service";
 
 
 @Module({
@@ -17,7 +18,8 @@ import { JwtService } from "@nestjs/jwt";
         UserRepository,
         RedisService,
         TokenService,
-        JwtService
+        JwtService,
+        S3Service
     ],
     exports: []
 })

@@ -11,6 +11,8 @@ import RedisService from "src/common/service/redis.service";
 import TokenService from "src/common/service/token.service";
 import { randomUUID } from "crypto";
 import { RoleEnum } from "src/common/enum/user.enum";
+import { S3Service } from "src/common/service/s3.service";
+
 
 @Injectable()
 export class UserService {
@@ -18,7 +20,8 @@ export class UserService {
     constructor(
         private readonly userRepository: UserRepository,
         private readonly redisService: RedisService,
-        private readonly tokenService: TokenService
+        private readonly tokenService: TokenService,
+        private readonly s3Service: S3Service
     ) { }
 
     async getUsers() {
@@ -83,5 +86,12 @@ export class UserService {
             }
         });
         return {access_token, refresh_token};
+    }
+
+    async uploadProfileImage(file: Express.Multer.File){
+        return await this.s3Service.uploadFile({
+            file: file, 
+            path: "users",
+        })
     }
 }
